@@ -25,7 +25,7 @@ jobs:
             git config user.name "github-actions"
             git add -A
             git commit -m "Unpack the project" || true
-            git push || true
+            git push origin HEAD:main || true
           fi
 
       - name: Set up Java 17
@@ -46,12 +46,20 @@ jobs:
         if: hashFiles('app/build.gradle.kts') != ''
         run: gradle --no-daemon --stacktrace testDebugUnitTest assembleDebug
 
+      - name: Keep the APK on the run page
+        if: hashFiles('app/build/outputs/apk/debug/*.apk') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: vaani-apk
+          path: app/build/outputs/apk/debug/*.apk
+
       - name: Publish the APK
         if: hashFiles('app/build/outputs/apk/debug/*.apk') != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk vaani-debug.apk
-          gh release create v3.5.0 --title "Vaani v3.5.0" \
+          gh release create v3.5.0 --repo "$REPO" --title "Vaani v3.5.0" \
             --notes "Built from the uploaded zip." vaani-debug.apk 2>/dev/null \
-          || gh release upload v3.5.0 vaani-debug.apk --clobber
+          || gh release upload v3.5.0 --repo "$REPO" vaani-debug.apk --clobber
