@@ -22,7 +22,7 @@ jobs:
             # The project ships its own .github folder. Dropping it does two things:
             # it cannot overwrite this workflow, and the commit below contains no
             # workflow files — GitHub refuses to let the built-in token push those.
-            rm -rf hands-off-assistant/.github
+            rm -rf hands-off-assistant/.git hands-off-assistant/.github
             cp -r hands-off-assistant/. .
             rm -rf hands-off-assistant *.zip
             git config user.email "actions@github.com"
