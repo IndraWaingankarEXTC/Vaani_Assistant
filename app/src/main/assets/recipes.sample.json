@@ -1,0 +1,32 @@
+{
+  "recipes": [
+    {
+      "name": "Spotify gym playlist",
+      "phrases": ["play my gym playlist", "gym music"],
+      "steps": [
+        { "do": "launch", "pkg": "com.spotify.music", "uri": "spotify:playlist:37i9dQZF1DX76Wlfdnj7AP" },
+        { "do": "pause", "ms": 1200 },
+        { "do": "tap", "label": "Shuffle play", "timeout": 8000 }
+      ]
+    },
+    {
+      "name": "Obsidian daily note",
+      "phrases": ["open my daily note", "today's note"],
+      "steps": [
+        { "do": "launch", "pkg": "md.obsidian" },
+        { "do": "pause", "ms": 1500 },
+        { "do": "tap", "label": "Daily notes", "timeout": 8000 }
+      ]
+    },
+    {
+      "name": "Amazon search for a saved item",
+      "phrases": ["find my saved headphones", "headphones on amazon"],
+      "steps": [
+        { "do": "launch", "pkg": "in.amazon.mShop.android.shopping", "uri": "amazon://search?query=headphones" },
+        { "do": "pause", "ms": 1500 },
+        { "do": "scroll", "forward": true },
+        { "do": "say", "text": "Here are the results. I will not touch checkout or payment." }
+      ]
+    }
+  ]
+}
